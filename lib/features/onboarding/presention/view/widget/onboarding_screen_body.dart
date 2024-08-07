@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:instagram_app/core/constant.dart';
 import 'package:instagram_app/core/utils/app_colors.dart';
 import 'package:instagram_app/core/utils/app_images.dart';
+import 'package:instagram_app/core/utils/routs.dart';
 import 'package:instagram_app/features/onboarding/presention/view/widget/custom_dotindicator.dart';
 import 'package:instagram_app/features/onboarding/presention/view/widget/page_view_item.dart';
 
@@ -77,14 +79,14 @@ class _OnboardingScreenBodyState extends State<OnboardingScreenBody> {
               GestureDetector(
                 onTap: () {
                   if (postion < 2) {
-                    setState(
-                      () {
-                        postion++;
-                        pageC.animateToPage(postion,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOut);
-                      },
-                    );
+                    setState(() {
+                      postion++;
+                      pageC.animateToPage(postion,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut);
+                    });
+                  } else {
+                    Navigator.pushNamed(context, AppRouter.loginScreenRoute);
                   }
                 },
                 child: Container(

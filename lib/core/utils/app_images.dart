@@ -5,4 +5,5 @@ class AppImages {
   static const onboardingImage1 = "assets/images/onboarding_image1.svg";
   static const onboardingImage2 = "assets/images/onboarding_image2.svg";
   static const onboardingImage3 = "assets/images/onboarding_image3.svg";
+  static const facebook = "assets/images/Facebook.svg";
 }
