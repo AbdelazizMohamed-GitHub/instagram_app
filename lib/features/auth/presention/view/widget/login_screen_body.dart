@@ -47,7 +47,6 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
           }
         },
         builder: (context, state) {
-         
           return SingleChildScrollView(
             child: Padding(
               padding:
@@ -99,17 +98,20 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                     const SizedBox(
                       height: 20,
                     ),
-                    state is LoginLoading?const Center(child: CircularProgressIndicator(),):
-                    CustomButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            BlocProvider.of<LoginCubit>(context).login(
-                              email: emailController.text,
-                              password: passwordController.text,
-                            );
-                          }
-                        },
-                        text: "Login"),
+                    state is LoginLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : CustomButton(
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                BlocProvider.of<LoginCubit>(context).login(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
+                              }
+                            },
+                            text: "Login"),
                     const SizedBox(
                       height: 15,
                     ),
@@ -121,7 +123,10 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                     const SizedBox(
                       height: 50,
                     ),
-                    const CustomFacebookLogin(
+                    CustomFacebookLogin(
+                      onPressed: () async {
+                        await context.read<LoginCubit>().loginWithFacebook();
+                      },
                       text: 'Login with Facebook',
                     )
                   ],

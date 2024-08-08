@@ -1,0 +1,8 @@
+
+<resources>
+<string name="facebook_app_id">3790396157865156</string>
+<string name="fb_login_protocol_scheme">fb1234</string>
+<string name="facebook_client_token">6aec76850438419ef16c8b1ca45de68b</string>
+<string name="app_name">Instagram App</string>
+
+</resources>

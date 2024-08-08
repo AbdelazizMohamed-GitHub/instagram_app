@@ -9,7 +9,6 @@ import 'package:instagram_app/core/widget/custom_text_form.dart';
 import 'package:instagram_app/features/auth/presention/cubits/register_cubit.dart/register_cubit.dart';
 import 'package:instagram_app/features/auth/presention/cubits/register_cubit.dart/register_state.dart';
 import 'package:instagram_app/features/auth/presention/view/widget/custom_or_divider.dart';
-import 'package:instagram_app/features/auth/presention/view/widget/facebook_login.dart';
 import 'package:instagram_app/features/auth/presention/view/widget/have_account.dart';
 
 class RegisterScreenBody extends StatefulWidget {
@@ -132,13 +131,6 @@ class _RegisterScreenBodyState extends State<RegisterScreenBody> {
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomOrDivider(),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    const CustomFacebookLogin(
-                      text: "Register in with Facebook",
-                    )
                   ],
                 ),
               ),

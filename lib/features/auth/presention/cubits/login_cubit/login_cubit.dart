@@ -12,7 +12,7 @@ class LoginCubit extends Cubit<LoginState> {
     required String password,
   }) async {
     emit(LoginLoading());
-    var result = await authRepo.login(
+    var result = await authRepo.loginWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -20,6 +20,16 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginError(error.message));
     }, (user) {
       emit(LoginSuccess(user));
+    });
+  }
+
+  Future<void> loginWithFacebook() async {
+    emit(LoginLoading());
+    var result = await authRepo.loginWithFacebook();
+    result.fold((error) {
+      emit(LoginError(error.message));
+    }, (user) {
+      emit(LoginSuccess(user.user!));
     });
   }
 }

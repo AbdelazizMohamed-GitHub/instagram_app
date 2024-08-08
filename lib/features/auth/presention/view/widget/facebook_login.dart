@@ -3,12 +3,13 @@ import 'package:instagram_app/core/utils/app_colors.dart';
 import 'package:instagram_app/core/utils/app_styles.dart';
 
 class CustomFacebookLogin extends StatelessWidget {
-  const CustomFacebookLogin({super.key, required this.text});
+  const CustomFacebookLogin({super.key, required this.text,required this.onPressed});
   final String text;
+  final  void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap:onPressed ,
       child: Container(
         height: 50,
         decoration: BoxDecoration(
