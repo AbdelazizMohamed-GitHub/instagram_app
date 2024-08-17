@@ -8,7 +8,6 @@ import 'package:instagram_app/core/widget/custom_button.dart';
 import 'package:instagram_app/core/widget/custom_text_form.dart';
 import 'package:instagram_app/features/auth/presention/cubits/register_cubit.dart/register_cubit.dart';
 import 'package:instagram_app/features/auth/presention/cubits/register_cubit.dart/register_state.dart';
-import 'package:instagram_app/features/auth/presention/view/widget/custom_or_divider.dart';
 import 'package:instagram_app/features/auth/presention/view/widget/have_account.dart';
 
 class RegisterScreenBody extends StatefulWidget {

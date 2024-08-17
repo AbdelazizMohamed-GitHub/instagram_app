@@ -29,6 +29,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bloc: ^8.1.4
+
+  cached_network_image: ^3.4.0
   cloud_firestore: ^5.2.1
   cupertino_icons: ^1.0.6
   dartz: ^0.10.1
@@ -43,6 +45,8 @@ dependencies:
   flutter_facebook_auth: ^7.0.1
   flutter_launcher_icons: ^0.13.1
   flutter_svg: ^2.0.10+1
+  image_picker: ^1.1.2
+  uuid: ^4.4.2
 
 dev_dependencies:
   flutter_lints: ^3.0.0

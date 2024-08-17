@@ -1,13 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:instagram_app/core/errors/failure.dart';
-import 'package:instagram_app/core/utils/routs.dart';
+import 'package:instagram_app/core/errors/auth_failure.dart';
+import 'package:instagram_app/features/auth/data/model/user_model.dart';
 import 'package:instagram_app/features/auth/domain/repo/auth_repo.dart';
 
 class AuthRepoImp implements AuthRepo {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   Future<Either<AuthFailure, User>> loginWithEmailAndPassword(
@@ -31,6 +32,20 @@ class AuthRepoImp implements AuthRepo {
     try {
       UserCredential userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
+      UserModel user = UserModel(
+        id: userCredential.user!.uid,
+        username: name,
+        email: email,
+        profilePictureUrl: '',
+        bio: '',
+        followers: [],
+        following: [],
+      );
+      firestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set(user.toUpload());
+
       return right(userCredential.user!);
     } on FirebaseAuthException catch (e) {
       return left(AuthFailure.fromCode(e.code));
@@ -40,10 +55,7 @@ class AuthRepoImp implements AuthRepo {
   }
 
   @override
-  Future<void> signOut(context) async {
-    await firebaseAuth.signOut();
-    Navigator.pushReplacementNamed(context, AppRouter.loginScreenRoute);
-  }
+
 
   @override
   Future<void> resetPassword({required String email}) async {
@@ -73,5 +85,4 @@ class AuthRepoImp implements AuthRepo {
     }
     return left(AuthFailure('An unknown error occurred.'));
   }
-
 }

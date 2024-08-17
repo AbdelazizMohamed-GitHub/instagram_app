@@ -21,7 +21,7 @@ class AuthFailure {
         return AuthFailure('Password is too weak.');
       case "user-mismatch":
         return AuthFailure('User Mismatch');
-      case "invalid-credential":
+      case "i9":
         return AuthFailure('Incorrect Email or Password');
       case "network-request-failed":
         return AuthFailure('No Internet Connection');
