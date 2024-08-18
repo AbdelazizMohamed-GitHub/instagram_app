@@ -25,6 +25,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   UserModel? currentUser;
+  List<PostModel> postList = [];
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -34,11 +35,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           actions: [
-            IconButton(
-                onPressed: () async {
-                  AuthService.signOut(context);
-                },
-                icon: Icon(Icons.logout_sharp)),
+            widget.uid == FirebaseAuth.instance.currentUser!.uid
+                ? IconButton(
+                    onPressed: () async {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Text("Are you sure?"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      AuthService.signOut(context);
+                                    },
+                                    child: Text("Logout")),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("Cancel"))
+                              ],
+                            );
+                          });
+                      //AuthService.signOut(context);
+                    },
+                    icon: Icon(Icons.logout_sharp))
+                : Container(),
             SizedBox(
               width: 10,
             )
@@ -68,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
                             children: [
-                              CustomProfileHeader(user: user),
+                              CustomProfileHeader(user: user, posts: postList,),
                               SizedBox(
                                 height: 15,
                               ),
@@ -153,11 +175,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 );
                               }
                               if (snapshot.hasData || snapshot.data != null) {
+
                                 final posts = snapshot.data!.docs.map((doc) {
                                   return PostModel.fromMap(
                                     doc.data() as Map<String, dynamic>,
                                   );
                                 }).toList();
+                                postList = posts;
 
                                 return CustomPostList(posts: posts);
                               }

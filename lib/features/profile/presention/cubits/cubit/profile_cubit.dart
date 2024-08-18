@@ -11,6 +11,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit({required this.profileRepo}) : super(ProfileInitial());
   ProfileRepo profileRepo;
   static ProfileCubit get(context) => BlocProvider.of<ProfileCubit>(context);
+
   Future<void> updateUserProfileWithImage({
     required Uint8List imageFile,
     required String username,

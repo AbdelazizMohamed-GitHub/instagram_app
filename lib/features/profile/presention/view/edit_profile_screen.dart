@@ -4,11 +4,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_app/core/service/storge_service.dart';
-import 'package:instagram_app/core/utils/app_images.dart';
 import 'package:instagram_app/core/waring/waring.dart';
 import 'package:instagram_app/core/widget/custom_button.dart';
-import 'package:instagram_app/core/widget/custom_picture.dart';
 import 'package:instagram_app/core/widget/custom_text_form.dart';
 import 'package:instagram_app/features/profile/data/repo_impl/profile_repo_imp.dart';
 import 'package:instagram_app/features/profile/presention/cubits/cubit/profile_cubit.dart';

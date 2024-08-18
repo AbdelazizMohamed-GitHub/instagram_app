@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_app/core/utils/app_images.dart';
@@ -95,10 +96,10 @@ class _SearchScreenState extends State<SearchScreen> {
                         leading: CustomPicture(
                             radius: 50,
                             image: users[index].profilePictureUrl != ''
-                                ? Image.network(
-                                    users[index].profilePictureUrl.toString(),
-                                    fit: BoxFit.cover,
-                                  )
+                                ? CachedNetworkImage(imageUrl: users[index].profilePictureUrl.toString(),fit: BoxFit.cover,
+                                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) => const Icon(Icons.error),
+                                )
                                 : Image.asset(AppImages.emptyUser)),
                         title: Text(
                           users[index].username,

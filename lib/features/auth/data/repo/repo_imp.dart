@@ -18,9 +18,8 @@ class AuthRepoImp implements AuthRepo {
           .signInWithEmailAndPassword(email: email, password: password);
       return right(userCredential.user!);
     } on FirebaseAuthException catch (e) {
+    
       return left(AuthFailure.fromCode(e.code));
-    } catch (e) {
-      return left(AuthFailure('An unknown error occurred.'));
     }
   }
 
@@ -55,8 +54,6 @@ class AuthRepoImp implements AuthRepo {
   }
 
   @override
-
-
   @override
   Future<void> resetPassword({required String email}) async {
     await firebaseAuth.sendPasswordResetEmail(email: email);
@@ -76,6 +73,19 @@ class AuthRepoImp implements AuthRepo {
             FacebookAuthProvider.credential(accessToken.tokenString);
         final UserCredential userCredential =
             await FirebaseAuth.instance.signInWithCredential(credential);
+        UserModel user = UserModel(
+          id: userCredential.user!.uid,
+          username: userCredential.user!.displayName!,
+          email: userCredential.user!.email!,
+          profilePictureUrl: userCredential.user!.photoURL!,
+          bio: '',
+          followers: [],
+          following: [],
+        );
+        firestore
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set(user.toUpload());
         return right(userCredential);
       }
     } on FirebaseAuthException catch (e) {

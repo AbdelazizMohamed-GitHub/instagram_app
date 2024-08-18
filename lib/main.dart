@@ -7,7 +7,6 @@ import 'package:instagram_app/features/auth/presention/view/login_screen.dart';
 import 'package:instagram_app/features/auth/presention/view/register_screen.dart';
 import 'package:instagram_app/features/home/presention/view/main_screen.dart';
 import 'package:instagram_app/features/onboarding/presention/view/onboardin_screen.dart';
-import 'package:instagram_app/features/profile/presention/view/profile_screen.dart';
 import 'package:instagram_app/firebase_options.dart';
 
 void main() async {
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterScreen(),
         '/main': (context) => const MainScreen(),
       },
-      // initialRoute: AppRouter.commentsScreenRoute,
+      
       initialRoute: FirebaseAuth.instance.currentUser == null
           ? AppRouter.loginScreenRoute
           : AppRouter.mainScreenRoute,

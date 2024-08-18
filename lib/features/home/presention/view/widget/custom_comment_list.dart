@@ -7,10 +7,10 @@ import '../../../../../core/widget/custom_picture.dart';
 
 class CustomCommentList extends StatelessWidget {
   const CustomCommentList({
-    Key? key,
+    super.key,
     required this.comments,
     required this.postId,
-  }) : super(key: key);
+  });
 final List comments;
 final String postId;
   @override

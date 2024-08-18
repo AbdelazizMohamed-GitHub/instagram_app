@@ -54,14 +54,43 @@ class CustomPostItem extends StatelessWidget {
                           width: 200,
                           child: Text(post[index].username.toString())),
                       const Spacer(),
-                      IconButton(
-                        onPressed: () async {
-                          context.read<PostCubit>().deletePosts(
-                              postId: post[index].postId.toString(),
-                              imageUrl: post[index].imageUrl.toString());
-                        },
-                        icon: const Icon(Icons.more_vert),
-                      ),
+                      post[index].userId ==
+                              FirebaseAuth.instance.currentUser!.uid
+                          ? IconButton(
+                              onPressed: () async {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        content: const Text(
+                                            "Are you sure you want to delete this post?"),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text("Cancel")),
+                                          TextButton(
+                                              onPressed: () async {
+                                                Navigator.pop(context);
+                                                await context
+                                                    .read<PostCubit>()
+                                                    .deletePosts(
+                                                        postId: post[index]
+                                                            .postId
+                                                            .toString(),
+                                                        imageUrl: post[index]
+                                                            .imageUrl
+                                                            .toString());
+                                              },
+                                              child: const Text("Delete")),
+                                        ],
+                                      );
+                                    });
+                              },
+                              icon: const Icon(Icons.more_vert),
+                            )
+                          : const SizedBox(),
                       const SizedBox(
                         width: 20,
                       ),
@@ -83,8 +112,9 @@ class CustomPostItem extends StatelessWidget {
                       child: CachedNetworkImage(
                         imageUrl: post[index].imageUrl.toString(),
                         placeholder: (context, url) =>
-                           const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>const Icon(Icons.error),
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
                   ),

@@ -15,7 +15,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   List screen =  [
-   const HomeScreen(),
+    HomeScreen(),
    const SearchScreen(),
    const AddPostScreen(),
     ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid,)

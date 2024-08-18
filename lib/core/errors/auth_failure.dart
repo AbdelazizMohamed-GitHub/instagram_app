@@ -21,12 +21,12 @@ class AuthFailure {
         return AuthFailure('Password is too weak.');
       case "user-mismatch":
         return AuthFailure('User Mismatch');
-      case "i9":
+      case "invalid-credential":
         return AuthFailure('Incorrect Email or Password');
       case "network-request-failed":
         return AuthFailure('No Internet Connection');
       default:
-        return AuthFailure('An unknown error occurred.');
+        return AuthFailure('An unknown error occurred.123');
     }
   }
 }

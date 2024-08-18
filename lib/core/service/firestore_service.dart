@@ -75,7 +75,7 @@ class FireStoreService {
     try {
       if (following.contains(userId)) {
         // Unfollow the user
-        print("uuuuuuuuuFFFFFFFFFFFFFFFF");
+     
         await firestore.collection('users').doc(auth.currentUser!.uid).update({
           'following': FieldValue.arrayRemove([userId])
         });
@@ -87,7 +87,6 @@ class FireStoreService {
       //  if (!following.contains(userId))
       else {
         // Follow the user
-        print("ffffffffffffffffffooooooooooooooo");
         await firestore.collection('users').doc(auth.currentUser!.uid).update({
           'following': FieldValue.arrayUnion([userId])
         });
@@ -97,7 +96,7 @@ class FireStoreService {
         });
       }
     } catch (e) {
-      print("Error following/unfollowing user: $e");
+    
       // You may want to handle errors more gracefully in a real app
     }
   }

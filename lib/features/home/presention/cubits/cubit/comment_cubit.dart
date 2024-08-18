@@ -18,7 +18,7 @@ class CommentCubit extends Cubit<CommentState> {
       comment: comment,
       postId: postId,
     );
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(const Duration(seconds: 10));
 
     result.fold((error) => emit(CommentFailure(error.message)),
         (r) => emit(CommentSuccess()));
