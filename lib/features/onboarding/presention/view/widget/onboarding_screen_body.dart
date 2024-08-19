@@ -1,4 +1,4 @@
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_app/core/utils/app_colors.dart';
 import 'package:instagram_app/core/utils/app_images.dart';
@@ -86,7 +86,11 @@ class _OnboardingScreenBodyState extends State<OnboardingScreenBody> {
                           curve: Curves.easeInOut);
                     });
                   } else {
-                    Navigator.pushNamed(context, AppRouter.loginScreenRoute);
+                    Navigator.pushNamed(
+                        context,
+                        FirebaseAuth.instance.currentUser != null
+                            ? AppRouter.mainScreenRoute
+                            : AppRouter.loginScreenRoute);
                   }
                 },
                 child: Container(
