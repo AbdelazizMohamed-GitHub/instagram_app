@@ -13,7 +13,7 @@ class CustomFacebookLogin extends StatelessWidget {
       child: Container(
         height: 50,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: AppColors.blue),
+            borderRadius: BorderRadius.circular(10), color: AppColors.primaryColor),
         child:
              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(text, style: AppStyles.text18Bold),

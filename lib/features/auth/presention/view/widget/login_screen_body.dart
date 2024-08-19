@@ -86,11 +86,11 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                           icon: isObscure
                               ? const Icon(
                                   Icons.visibility,
-                                  color: AppColors.blue,
+                                  color: AppColors.primaryColor,
                                 )
                               : const Icon(
                                   Icons.visibility_off,
-                                  color: AppColors.blue,
+                                  color: AppColors.primaryColor,
                                 )),
                       obscureText: isObscure,
                       kTybe: TextInputType.text,

@@ -20,7 +20,7 @@ class HaveAccount extends StatelessWidget {
               Navigator.pop(context);
             },
             child: const Text("Login",
-                style: TextStyle(color: AppColors.blue, fontSize: 20)))
+                style: TextStyle(color: AppColors.primaryColor, fontSize: 20)))
       ],
     );
   }

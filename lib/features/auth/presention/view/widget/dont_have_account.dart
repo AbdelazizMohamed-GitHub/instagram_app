@@ -17,7 +17,7 @@ class DontHaveAccount extends StatelessWidget {
                       ),
                     ),
                     TextButton(onPressed: (){Navigator.pushNamed(context, AppRouter.registerScreenRoute);}, child: const Text("Register",
-                        style: TextStyle(color: AppColors.blue, fontSize: 20)))
+                        style: TextStyle(color: AppColors.primaryColor, fontSize: 20)))
                   ],
                 );
   }

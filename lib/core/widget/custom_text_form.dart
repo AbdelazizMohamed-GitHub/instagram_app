@@ -8,7 +8,8 @@ class CustomTextForm extends StatelessWidget {
       this.sIcon,
       required this.text,
       required this.textController,
-      required this.obscureText, required this.kTybe});
+      required this.obscureText,
+      required this.kTybe});
   final IconData pIcon;
   final Widget? sIcon;
   final String text;
@@ -31,9 +32,10 @@ class CustomTextForm extends StatelessWidget {
           filled: true,
           fillColor: const Color(0xffEEEEEE),
           errorBorder: border,
+          focusedErrorBorder: border,
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: AppColors.blue)),
+              borderSide: const BorderSide(color: AppColors.primaryColor)),
           enabledBorder: border,
           prefixIcon: Icon(pIcon),
           suffixIcon: sIcon,

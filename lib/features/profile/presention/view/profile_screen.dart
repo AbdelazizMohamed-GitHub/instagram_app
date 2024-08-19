@@ -25,7 +25,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   UserModel? currentUser;
-  List<PostModel> postList = [];
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -57,7 +57,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ],
                             );
                           });
-                      //AuthService.signOut(context);
                     },
                     icon: Icon(Icons.logout_sharp))
                 : Container(),
@@ -84,112 +83,113 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 if (snapshot.hasData || snapshot.data != null) {
                   UserModel user = UserModel.toGetData(snapshot.data!);
                   return SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            children: [
-                              CustomProfileHeader(user: user, posts: postList,),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              FirebaseAuth.instance.currentUser!.uid !=
-                                      widget.uid
-                                  ? BlocConsumer<ProfileCubit, ProfileState>(
-                                      listener: (context, state) {
-                                        if (state is ProfileSucess) {
-                                          currentUser = state.userModel;
-                                        }
-                                        if (state is ProfileFailure) {
-                                          snackbar(context, state.error);
-                                        }
-                                      },
-                                      builder: (context, state) {
-                                        return state is ProfileLoading
-                                            ? Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              )
-                                            : CustomButton(
-                                                onPressed: () async {
-                                                  context
-                                                      .read<ProfileCubit>()
-                                                      .followUser(
-                                                          uid: widget.uid,
-                                                          following:
-                                                              currentUser!
-                                                                      .following
-                                                                  as List);
-                                                  context
-                                                      .read<ProfileCubit>()
-                                                      .getUserData();
-                                                },
-                                                text: currentUser!.following!
-                                                        .contains(widget.uid)
-                                                    ? "Unfollow"
-                                                    : "follow",
-                                              );
-                                      },
-                                    )
-                                  : CustomButton(
-                                      onPressed: () {
-                                        Navigator.push(
+                      child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('posts')
+                        .where('userId', isEqualTo: widget.uid)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text("Error: ${snapshot.error}"),
+                        );
+                      }
+                      final posts = snapshot.data!.docs.map((doc) {
+                        return PostModel.fromMap(
+                          doc.data() as Map<String, dynamic>,
+                        );
+                      }).toList();
+
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                CustomProfileHeader(
+                                  user: user,
+                                  posts: posts,
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                FirebaseAuth.instance.currentUser!.uid !=
+                                        widget.uid
+                                    ? BlocConsumer<ProfileCubit, ProfileState>(
+                                        listener: (context, state) {
+                                          if (state is ProfileSucess) {
+                                            currentUser = state.userModel;
+                                          }
+                                          if (state is ProfileFailure) {
+                                            snackbar(context, state.error);
+                                          }
+                                        },
+                                        builder: (context, state) {
+                                          return state is ProfileLoading
+                                              ? Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                )
+                                              : CustomButton(
+                                                  onPressed: () async {
+                                                    context
+                                                        .read<ProfileCubit>()
+                                                        .followUser(
+                                                            uid: widget.uid,
+                                                            following:
+                                                                currentUser!
+                                                                        .following
+                                                                    as List);
+                                                    context
+                                                        .read<ProfileCubit>()
+                                                        .getUserData();
+                                                  },
+                                                  text: currentUser!.following!
+                                                          .contains(widget.uid)
+                                                      ? "Unfollow"
+                                                      : "follow",
+                                                );
+                                        },
+                                      )
+                                    : CustomButton(
+                                        onPressed: () {
+                                          Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditProfileScreen(
-                                                      userName: user.username,
-                                                      photoUrl:
-                                                          user.profilePictureUrl ??
-                                                              '',
-                                                      bio: user.bio,
-                                                    )));
-                                      },
-                                      text: "Edit Profile"),
-                              SizedBox(
-                                height: 15,
-                              ),
-                            ],
+                                              builder: (context) =>
+                                                  EditProfileScreen(
+                                                userName: user.username,
+                                                photoUrl:
+                                                    user.profilePictureUrl ??
+                                                        '',
+                                                bio: user.bio,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        text: "Edit Profile"),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Divider(thickness: 1, color: Colors.black),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('posts')
-                                .where('userId', isEqualTo: widget.uid)
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                              if (snapshot.hasError) {
-                                return Center(
-                                  child: Text("Error: ${snapshot.error}"),
-                                );
-                              }
-                              if (snapshot.hasData || snapshot.data != null) {
-
-                                final posts = snapshot.data!.docs.map((doc) {
-                                  return PostModel.fromMap(
-                                    doc.data() as Map<String, dynamic>,
-                                  );
-                                }).toList();
-                                postList = posts;
-
-                                return CustomPostList(posts: posts);
-                              }
-                              return SizedBox();
-                            })
-                      ],
-                    ),
-                  );
+                          Divider(thickness: 1, color: Colors.black),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomPostList(
+                            posts: posts,
+                          )
+                        ],
+                      );
+                    },
+                  ));
                 }
                 return SizedBox();
               }),

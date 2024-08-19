@@ -5,7 +5,7 @@ import 'package:instagram_app/features/auth/data/model/user_model.dart';
 import 'package:instagram_app/features/profile/presention/view/widget/custom_profile_image.dart';
 import 'package:instagram_app/features/profile/presention/view/widget/custom_profile_top_information.dart';
 
-class CustomProfileHeader extends StatelessWidget {
+class CustomProfileHeader extends StatefulWidget {
   const CustomProfileHeader({
     super.key,
     required this.user,
@@ -13,15 +13,22 @@ class CustomProfileHeader extends StatelessWidget {
   });
   final UserModel user;
   final List posts;
+
+  @override
+  State<CustomProfileHeader> createState() => _CustomProfileHeaderState();
+}
+
+class _CustomProfileHeaderState extends State<CustomProfileHeader> {
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomProfilePicture(
-              imageUrl: "${user.profilePictureUrl}",
+              imageUrl: "${widget.user.profilePictureUrl}",
             ),
             const SizedBox(
               height: 5,
@@ -29,23 +36,29 @@ class CustomProfileHeader extends StatelessWidget {
             SizedBox(
               width: 100,
               child: Text(
-                user.username,
+                widget.user.username,
                 overflow: TextOverflow.visible,
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
             ),
-            Text(
-              user.bio,
-              style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+            SizedBox(
+              width: 100,
+              child: Text(
+                widget.user.bio,
+                style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+              ),
             ),
           ],
         ),
-         CustomProfileTopInformation(number: posts.length.toString(), text: "Posts"),
         CustomProfileTopInformation(
-            number: user.followers!.length.toString(), text: "Followers"),
+            number: widget.posts.length.toString(), text: "Posts"),
         CustomProfileTopInformation(
-            number: user.following!.length.toString(), text: "Following"),
+            number: widget.user.followers!.length.toString(),
+            text: "Followers"),
+        CustomProfileTopInformation(
+            number: widget.user.following!.length.toString(),
+            text: "Following"),
       ],
     );
   }

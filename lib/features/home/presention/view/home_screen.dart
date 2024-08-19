@@ -60,14 +60,19 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    CustomStoryList(),
+                    // CustomStoryList(),
                     const Divider(thickness: 1, color: Colors.black),
                     StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection('posts')
-                            .where('userId', whereIn: user?.following)
-                             .orderBy('timestamp', descending: true)
-                            .snapshots(),
+                        stream: user!.following!.isNotEmpty
+                            ? FirebaseFirestore.instance
+                                .collection('posts')
+                                .where('userId', whereIn: user?.following ?? [])
+                                .orderBy('timestamp', descending: true)
+                                .snapshots()
+                            : FirebaseFirestore.instance
+                                .collection('posts')
+                                .orderBy('timestamp', descending: true)
+                                .snapshots(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {

@@ -22,24 +22,26 @@ class _MainScreenState extends State<MainScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screen[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        unselectedItemColor: Colors.black.withOpacity(0.5),
-        selectedItemColor: Colors.black,
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-          BottomNavigationBarItem(icon: Icon(Icons.add_box), label: "AddPost"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        body: screen[currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.shifting,
+          unselectedItemColor: Colors.black.withOpacity(0.5),
+          selectedItemColor: Colors.black,
+          currentIndex: currentIndex,
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
+            BottomNavigationBarItem(icon: Icon(Icons.add_box), label: "AddPost"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          ],
+        ),
       ),
     );
   }

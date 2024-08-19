@@ -32,9 +32,8 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterScreen(),
         '/main': (context) => const MainScreen(),
       },
-      
       initialRoute: FirebaseAuth.instance.currentUser == null
-          ? AppRouter.loginScreenRoute
+          ? AppRouter.onBoardingScreenRoute
           : AppRouter.mainScreenRoute,
     );
   }
