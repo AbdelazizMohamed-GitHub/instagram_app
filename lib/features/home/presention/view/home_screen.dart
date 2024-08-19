@@ -9,7 +9,6 @@ import 'package:instagram_app/core/waring/waring.dart';
 import 'package:instagram_app/features/auth/data/model/user_model.dart';
 import 'package:instagram_app/features/home/data/models/post_model.dart';
 import 'package:instagram_app/features/home/presention/view/widget/custom_post_item.dart';
-import 'package:instagram_app/features/home/presention/view/widget/custom_story_list.dart';
 import 'package:instagram_app/features/profile/data/repo_impl/profile_repo_imp.dart';
 import 'package:instagram_app/features/profile/presention/cubits/cubit/profile_cubit.dart';
 

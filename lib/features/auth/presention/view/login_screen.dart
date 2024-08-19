@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_app/features/auth/data/repo/repo_imp.dart';
+import 'package:instagram_app/features/auth/data/repo_impl/repo_imp.dart';
 import 'package:instagram_app/features/auth/presention/view/widget/login_screen_body.dart';
 
 import '../cubits/login_cubit/login_cubit.dart';

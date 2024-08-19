@@ -59,7 +59,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 future: FirebaseFirestore.instance
                     .collection('users')
                     .where('username', isGreaterThanOrEqualTo: searchText)
-                     .where('username', isLessThanOrEqualTo: '$searchText\uf8ff')
+                    .where('username', isLessThanOrEqualTo: '$searchText\uf8ff')
                     .get(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -77,6 +77,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       doc.data(),
                     );
                   }).toList();
+                  if (snapshot.data!.docs.isEmpty) {
+                    return Center(child: Text("No results found"));
+                  }
                   return ListView.separated(
                     shrinkWrap: true,
                     itemCount: users.length,
@@ -96,10 +99,16 @@ class _SearchScreenState extends State<SearchScreen> {
                         leading: CustomPicture(
                             radius: 50,
                             image: users[index].profilePictureUrl != ''
-                                ? CachedNetworkImage(imageUrl: users[index].profilePictureUrl.toString(),fit: BoxFit.cover,
-                                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                                errorWidget: (context, url, error) => const Icon(Icons.error),
-                                )
+                                ? CachedNetworkImage(
+                                    imageUrl: users[index]
+                                        .profilePictureUrl
+                                        .toString(),
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                  )
                                 : Image.asset(AppImages.emptyUser)),
                         title: Text(
                           users[index].username,

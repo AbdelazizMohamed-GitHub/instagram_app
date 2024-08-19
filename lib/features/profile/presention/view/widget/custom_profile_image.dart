@@ -22,19 +22,9 @@ class CustomProfilePicture extends StatelessWidget {
                 imageUrl: imageUrl,
                 placeholder: (context, url) => const Center(
                   child: CircularProgressIndicator(),
-                ),errorWidget: (context, url, error) =>const Icon(Icons.error),
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               )),
-        Positioned(
-          bottom: 0,
-          right: 0,
-          child: CircleAvatar(
-              radius: 18,
-              backgroundColor: Colors.white,
-              child: IconButton(
-                icon: const Icon(Icons.add_a_photo),
-                onPressed: () async {},
-              )),
-        ),
       ],
     );
   }

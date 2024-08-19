@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:instagram_app/core/constant.dart';
 import 'package:instagram_app/core/utils/app_colors.dart';
 import 'package:instagram_app/core/utils/app_images.dart';
 import 'package:instagram_app/core/utils/routs.dart';
+import 'package:instagram_app/core/utils/spaces.dart';
 import 'package:instagram_app/features/onboarding/presention/view/widget/custom_dotindicator.dart';
 import 'package:instagram_app/features/onboarding/presention/view/widget/page_view_item.dart';
 

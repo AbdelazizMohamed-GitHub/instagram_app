@@ -4,8 +4,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_app/core/constant.dart';
 import 'package:instagram_app/core/service/storge_service.dart';
+import 'package:instagram_app/core/utils/spaces.dart';
 import 'package:instagram_app/core/waring/waring.dart';
 import 'package:instagram_app/features/home/data/repo_impl/post_repo_impl.dart';
 import 'package:instagram_app/features/home/presention/cubits/post_cubit/post_cubit.dart';
