@@ -22,6 +22,7 @@ class FireStoreService {
     UserModel user = UserModel.toGetData(doc);
 
     if (user.profilePictureUrl != '') {
+      
       await StorgeService.deleteImage(user.profilePictureUrl!);
     }
 
@@ -69,13 +70,13 @@ class FireStoreService {
   }
 
   static Future<void> followUser({
-    required List following, // Typing the list as List<String>
+    required List following,
     required String userId,
   }) async {
     try {
       if (following.contains(userId)) {
         // Unfollow the user
-     
+
         await firestore.collection('users').doc(auth.currentUser!.uid).update({
           'following': FieldValue.arrayRemove([userId])
         });
@@ -96,7 +97,6 @@ class FireStoreService {
         });
       }
     } catch (e) {
-    
       // You may want to handle errors more gracefully in a real app
     }
   }
