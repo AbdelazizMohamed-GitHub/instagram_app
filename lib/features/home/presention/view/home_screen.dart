@@ -86,7 +86,7 @@ class HomeScreen extends StatelessWidget {
                             return Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('No Posts Follow Freinds'),
+                                Text('No Posts Follow Your Freinds'),
                               ],
                             );
                           }

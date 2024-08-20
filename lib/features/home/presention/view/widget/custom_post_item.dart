@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_app/core/widget/custom_picture.dart';
 
 import 'package:instagram_app/features/home/data/models/post_model.dart';
 import 'package:instagram_app/features/home/data/repo_impl/comment_repo_impl.dart';
@@ -42,10 +43,16 @@ class CustomPostItem extends StatelessWidget {
                       const SizedBox(
                         width: 16,
                       ),
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            NetworkImage("${post[index].profilePictureUrl}"),
+                      CustomPicture(
+                        radius: 60,
+                        image: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl: post[index].profilePictureUrl.toString(),
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
                       ),
                       const SizedBox(
                         width: 10,
