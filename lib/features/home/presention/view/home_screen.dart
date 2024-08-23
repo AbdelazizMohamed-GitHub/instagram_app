@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ import 'package:instagram_app/features/home/presention/view/widget/custom_post_i
 import 'package:instagram_app/features/profile/data/repo_impl/profile_repo_imp.dart';
 import 'package:instagram_app/features/profile/presention/cubits/cubit/profile_cubit.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   UserModel? user;
@@ -32,11 +32,11 @@ class HomeScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return state is ProfileLoading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : SafeArea(
                   child: SingleChildScrollView(
                   child: Column(children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
@@ -51,17 +51,17 @@ class HomeScreen extends StatelessWidget {
                               fit: BoxFit.fill,
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           SvgPicture.asset(AppImages.massanger)
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     // CustomStoryList(),
                     const Divider(thickness: 1, color: Colors.black),
-                    StreamBuilder<QuerySnapshot>(
+                    StreamBuilder<QuerySnapshot?>(
                         stream: user!.following!.isNotEmpty
                             ? FirebaseFirestore.instance
                                 .collection('posts')
@@ -75,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           } else if (snapshot.hasError) {
@@ -83,10 +83,16 @@ class HomeScreen extends StatelessWidget {
                                 child: Text('Home Error: ${snapshot.error}'));
                           }
                           if (snapshot.data!.docs.isEmpty) {
-                            return Column(
+                            return const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('No Posts Follow Your Freinds'),
+                                SizedBox(
+                                  height: 300,
+                                ),
+                                Text(
+                                  'No Posts Follow Your Freinds',
+                                  style: TextStyle(fontSize: 20),
+                                ),
                               ],
                             );
                           }
@@ -99,11 +105,11 @@ class HomeScreen extends StatelessWidget {
 
                             return ListView.separated(
                               shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: post.length,
                               separatorBuilder:
                                   (BuildContext context, int index) {
-                                return Divider(
+                                return const Divider(
                                     thickness: 1, color: Colors.black);
                               },
                               itemBuilder: (BuildContext context, int index) {

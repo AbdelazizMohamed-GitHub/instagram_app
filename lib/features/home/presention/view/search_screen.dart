@@ -1,7 +1,7 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_app/core/utils/app_images.dart';
 import 'package:instagram_app/core/widget/custom_picture.dart';
@@ -22,7 +22,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
         body: SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
         child: Column(
           children: [
             TextFormField(
@@ -38,7 +38,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     FocusScope.of(context).unfocus();
                     setState(() {});
                   },
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                 ),
                 hintText: "Search",
                 filled: true,
@@ -48,22 +48,24 @@ class _SearchScreenState extends State<SearchScreen> {
                     borderSide: BorderSide.none),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text("Search Result"),
-            SizedBox(
+            const Text("Search Result"),
+            const SizedBox(
               height: 20,
             ),
             FutureBuilder(
                 future: FirebaseFirestore.instance
                     .collection('users')
+                    .where('id',
+                        isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
                     .where('username', isGreaterThanOrEqualTo: searchText)
                     .where('username', isLessThanOrEqualTo: '$searchText\uf8ff')
                     .get(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -78,46 +80,49 @@ class _SearchScreenState extends State<SearchScreen> {
                     );
                   }).toList();
                   if (snapshot.data!.docs.isEmpty) {
-                    return Center(child: Text("No results found"));
+                    return const Center(child: Text("No results found"));
                   }
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: users.length,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Divider(thickness: 1);
-                    },
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfileScreen(
-                                        uid: users[index].id.toString(),
-                                      )));
-                        },
-                        leading: CustomPicture(
-                            radius: 50,
-                            image: users[index].profilePictureUrl != ''
-                                ? CachedNetworkImage(
-                                    imageUrl: users[index]
-                                        .profilePictureUrl
-                                        .toString(),
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => Center(
-                                        child: CircularProgressIndicator()),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                  )
-                                : Image.asset(AppImages.emptyUser)),
-                        title: Text(
-                          users[index].username,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 18),
-                        ),
-                        subtitle: Text(users[index].bio),
-                      );
-                    },
+                  return Expanded(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                     
+                      itemCount: users.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const Divider(thickness: 1);
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfileScreen(
+                                          uid: users[index].id.toString(),
+                                        )));
+                          },
+                          leading: CustomPicture(
+                              radius: 50,
+                              image: users[index].profilePictureUrl != ''
+                                  ? CachedNetworkImage(
+                                      imageUrl: users[index]
+                                          .profilePictureUrl
+                                          .toString(),
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => const Center(
+                                          child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    )
+                                  : Image.asset(AppImages.emptyUser)),
+                          title: Text(
+                            users[index].username,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 18),
+                          ),
+                          subtitle: Text(users[index].bio),
+                        );
+                      },
+                    ),
                   );
                 })
           ],

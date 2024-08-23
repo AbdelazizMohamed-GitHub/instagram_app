@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'dart:typed_data';
 
@@ -37,7 +36,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         },
         builder: (context, state) {
           return state is PostLoading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : Scaffold(
                   appBar: AppBar(
                     leading: IconButton(
@@ -46,7 +45,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                             imageFile = null;
                           });
                         },
-                        icon: Icon(Icons.close)),
+                        icon: const Icon(Icons.close)),
                     automaticallyImplyLeading: false,
                     actions: [
                       TextButton(
@@ -61,7 +60,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                             "Post",
                             style: TextStyle(fontSize: 18),
                           )),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       )
                     ],
@@ -77,7 +76,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                     imageFile = image;
                                   });
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.upload,
                                   size: 40,
                                 )),
@@ -85,7 +84,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         : Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               SizedBox(
@@ -99,7 +98,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                     horizontal: 16.0, vertical: 10.0),
                                 child: TextFormField(
                                   controller: captionController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       hintText: "Add caption",
                                       border: InputBorder.none),
                                 ),

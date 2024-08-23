@@ -115,6 +115,8 @@ class _RegisterScreenBodyState extends State<RegisterScreenBody> {
                         : CustomButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
+                                                                FocusScope.of(context).unfocus();
+
                                 context.read<RegisterCubit>().register(
                                       name: nameController.text,
                                       email: emailController.text,

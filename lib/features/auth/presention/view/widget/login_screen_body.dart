@@ -105,6 +105,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                         : CustomButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
+                                FocusScope.of(context).unfocus();
                                 BlocProvider.of<LoginCubit>(context).login(
                                   email: emailController.text,
                                   password: passwordController.text,

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:instagram_app/core/widget/custom_picture.dart';
 
 import 'package:instagram_app/features/home/data/models/post_model.dart';
 import 'package:instagram_app/features/home/data/repo_impl/comment_repo_impl.dart';
-import 'package:instagram_app/features/home/data/repo_impl/post_repo_impl.dart';
 import 'package:instagram_app/features/home/presention/cubits/cubit/comment_cubit.dart';
 import 'package:instagram_app/features/home/presention/cubits/post_cubit/post_cubit.dart';
 import 'package:instagram_app/features/home/presention/view/comments_screen.dart';
@@ -22,16 +20,13 @@ class CustomPostItem extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<PostCubit>(
-          create: (context) => PostCubit(postRepo: PostRepoImpl()),
-        ),
+    return 
+       
         BlocProvider<CommentCubit>(
           create: (context) => CommentCubit(commentRepo: CommentRepoimpl())
             ..getCommentLength(postId: post[index].postId.toString()),
-        ),
-      ],
+        
+     
       child: BlocBuilder<PostCubit, PostState>(
         builder: (context, state) {
           return Column(
@@ -89,6 +84,7 @@ class CustomPostItem extends StatelessWidget {
                                                         imageUrl: post[index]
                                                             .imageUrl
                                                             .toString());
+                                                            
                                               },
                                               child: const Text("Delete")),
                                         ],
