@@ -1,7 +1,8 @@
-class AuthFailure {
-  final String message;
+import 'package:instagram_app/core/errors/failure.dart';
 
-  AuthFailure(this.message);
+
+class AuthFailure extends Failure {
+   AuthFailure(String message) : super(message: message);
 
   factory AuthFailure.fromCode(String code) {
     switch (code) {

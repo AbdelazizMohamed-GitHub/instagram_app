@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_app/core/errors/failure.dart';
 import 'package:instagram_app/core/utils/app_images.dart';
 import 'package:instagram_app/core/widget/custom_picture.dart';
 import 'package:instagram_app/features/auth/data/model/user_model.dart';
@@ -71,7 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   }
                   if (snapshot.hasError) {
                     return Center(
-                      child: Text("Error: ${snapshot.error}"),
+                      child: Text("Error: ${Failure(message: snapshot.error.toString())}"),
                     );
                   }
                   final users = snapshot.data!.docs.map((doc) {

@@ -4,13 +4,14 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:instagram_app/core/errors/failure.dart';
 import 'package:instagram_app/core/errors/firestore_failure.dart';
 import 'package:instagram_app/core/service/firestore_service.dart';
 import 'package:instagram_app/features/home/domain/repo/post_repo.dart';
 
 class PostRepoImpl extends PostRepo {
   @override
-  Future<Either<FirestoreFailure, void>> addPosts(
+  Future<Either<Failure, void>> addPosts(
       {required String caption, required Uint8List imageFile}) async {
     try {
       await FireStoreService.addPost(caption: caption, imageFile: imageFile);
@@ -21,7 +22,7 @@ class PostRepoImpl extends PostRepo {
   }
 
   @override
-  Future<Either<FirestoreFailure, void>> likePosts(
+  Future<Either<Failure, void>> likePosts(
       {required String postId,
       required String uid,
       required List likes}) async {
@@ -35,7 +36,7 @@ class PostRepoImpl extends PostRepo {
   }
 
   @override
-  Future<Either<FirestoreFailure, void>> deletePost({required String postId,required String imageUrl}) async{
+  Future<Either<Failure, void>> deletePost({required String postId,required String imageUrl}) async{
     try {
    var result= await  FireStoreService.deletePost(postId: postId, imagUrl: imageUrl);
    return right(result);

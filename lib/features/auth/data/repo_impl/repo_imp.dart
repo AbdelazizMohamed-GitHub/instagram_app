@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:instagram_app/core/errors/auth_failure.dart';
+import 'package:instagram_app/core/errors/failure.dart';
 import 'package:instagram_app/features/auth/data/model/user_model.dart';
 import 'package:instagram_app/features/auth/domain/repo/auth_repo.dart';
 
@@ -11,7 +12,7 @@ class AuthRepoImp implements AuthRepo {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
-  Future<Either<AuthFailure, User>> loginWithEmailAndPassword(
+  Future<Either<Failure, User>> loginWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
       UserCredential userCredential = await firebaseAuth
@@ -24,7 +25,7 @@ class AuthRepoImp implements AuthRepo {
   }
 
   @override
-  Future<Either<AuthFailure, User>> registerWithEmailAndPassword(
+  Future<Either<Failure, User>> registerWithEmailAndPassword(
       {required String email,
       required String password,
       required String name}) async {
@@ -61,7 +62,7 @@ class AuthRepoImp implements AuthRepo {
   }
 
   @override
-  Future<Either<AuthFailure, UserCredential>> loginWithFacebook() async {
+  Future<Either<Failure, UserCredential>> loginWithFacebook() async {
     try {
       // Trigger the sign-in flow
       final LoginResult loginResult = await FacebookAuth.instance.login();

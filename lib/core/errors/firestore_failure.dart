@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:instagram_app/core/errors/failure.dart';
 
-class FirestoreFailure {
-  final String message;
-
-  FirestoreFailure(this.message);
+class FirestoreFailure extends Failure {
+  FirestoreFailure(String message) : super(message: message);
   factory FirestoreFailure.fromCode(FirebaseException e) {
     switch (e.code) {
       case 'permission-denied':

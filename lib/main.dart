@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_app/core/utils/funcation.dart';
 import 'package:instagram_app/core/utils/routs.dart';
 import 'package:instagram_app/features/auth/presention/view/login_screen.dart';
 import 'package:instagram_app/features/auth/presention/view/register_screen.dart';
@@ -14,17 +15,36 @@ import 'package:instagram_app/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseAppCheck.instance.activate();
 
-  runApp(const MyApp());
+  runApp(const Instagram());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Instagram extends StatefulWidget {
+  const Instagram({super.key});
+
+  @override
+  State<Instagram> createState() => _ImstagramState();
+}
+
+class _ImstagramState extends State<Instagram> {
+  bool _isLoggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    bool isLoggedIn = await checkLoginStatus();
+    setState(() {
+      _isLoggedIn = isLoggedIn;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +59,9 @@ class MyApp extends StatelessWidget {
           '/main': (context) => const MainScreen(),
         },
         initialRoute: FirebaseAuth.instance.currentUser == null
-            ? AppRouter.onBoardingScreenRoute
+            ? _isLoggedIn
+                ? AppRouter.loginScreenRoute
+                : AppRouter.onBoardingScreenRoute
             : AppRouter.mainScreenRoute,
       ),
     );

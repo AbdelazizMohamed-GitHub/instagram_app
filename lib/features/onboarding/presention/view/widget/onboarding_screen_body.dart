@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_app/core/utils/app_colors.dart';
 import 'package:instagram_app/core/utils/app_images.dart';
+import 'package:instagram_app/core/utils/funcation.dart';
 import 'package:instagram_app/core/utils/routs.dart';
 import 'package:instagram_app/core/utils/spaces.dart';
 import 'package:instagram_app/features/onboarding/presention/view/widget/custom_dotindicator.dart';
@@ -86,11 +86,8 @@ class _OnboardingScreenBodyState extends State<OnboardingScreenBody> {
                           curve: Curves.easeInOut);
                     });
                   } else {
-                    Navigator.pushNamed(
-                        context,
-                        FirebaseAuth.instance.currentUser != null
-                            ? AppRouter.mainScreenRoute
-                            : AppRouter.loginScreenRoute);
+                    Navigator.pushNamed(context, AppRouter.loginScreenRoute);
+                    login();
                   }
                 },
                 child: Container(
