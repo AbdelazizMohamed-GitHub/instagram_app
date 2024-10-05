@@ -19,6 +19,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseAppCheck.instance.activate();
+  setupLocator();
 
   runApp(const Instagram());
 }
@@ -49,7 +50,7 @@ class _ImstagramState extends State<Instagram> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PostCubit(postRepo: PostRepoImpl()),
+      create: (context) => PostCubit(postRepo: getIt.get<PostRepoImpl>()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {

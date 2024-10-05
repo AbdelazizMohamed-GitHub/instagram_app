@@ -3,7 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_app/core/service/app_service.dart';
+import 'package:instagram_app/core/service/auth_service.dart';
+import 'package:instagram_app/core/utils/funcation.dart';
 import 'package:instagram_app/core/waring/waring.dart';
 import 'package:instagram_app/core/widget/custom_button.dart';
 import 'package:instagram_app/features/auth/data/model/user_model.dart';
@@ -30,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          ProfileCubit(profileRepo: ProfileRepoImpl())..getUserData(),
+          ProfileCubit(profileRepo: getIt.get<ProfileRepoImpl>())..getUserData(),
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,

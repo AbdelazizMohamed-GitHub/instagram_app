@@ -5,6 +5,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_app/core/utils/funcation.dart';
 
 import 'package:instagram_app/core/waring/waring.dart';
 import 'package:instagram_app/features/home/data/models/comment_model.dart';
@@ -28,7 +29,7 @@ class CommentsScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(top: 80),
           child: BlocProvider(
-            create: (context) => CommentCubit(commentRepo: CommentRepoimpl()),
+            create: (context) => CommentCubit(commentRepo: getIt.get<CommentRepoimpl>()),
             child: BlocConsumer<CommentCubit, CommentState>(
               listener: (context, state) {
                 if (state is CommentFailure) {

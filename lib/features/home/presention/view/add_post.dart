@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_app/core/service/storge_service.dart';
+import 'package:instagram_app/core/utils/funcation.dart';
 import 'package:instagram_app/core/utils/spaces.dart';
 import 'package:instagram_app/core/waring/waring.dart';
 import 'package:instagram_app/features/home/data/repo_impl/post_repo_impl.dart';
@@ -22,7 +23,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PostCubit(postRepo: PostRepoImpl()),
+      create: (context) => PostCubit(postRepo: getIt.get<PostRepoImpl>()),
       child: BlocConsumer<PostCubit, PostState>(
         listener: (context, state) {
           if (state is PostFailure) {

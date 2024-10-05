@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_app/core/utils/funcation.dart';
 import 'package:instagram_app/core/waring/waring.dart';
 import 'package:instagram_app/core/widget/custom_button.dart';
 import 'package:instagram_app/core/widget/custom_text_form.dart';
@@ -47,7 +48,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProfileCubit(profileRepo: ProfileRepoImpl()),
+      create: (context) => ProfileCubit(profileRepo: getIt.get<ProfileRepoImpl>()),
       child: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {
           if (state is EditProfileFailure) {

@@ -8,6 +8,8 @@ import 'package:instagram_app/features/auth/data/model/user_model.dart';
 import 'package:instagram_app/features/profile/domain/repo/profile_repo.dart';
 
 class ProfileRepoImpl extends ProfileRepo {
+  final FireStoreService fireStoreService;
+  ProfileRepoImpl({required this.fireStoreService});
   @override
   Future<Either<FirestoreFailure, void>> updateUserProfileWithImage({
     required Uint8List imageFile,
@@ -15,7 +17,7 @@ class ProfileRepoImpl extends ProfileRepo {
     required String bio,
   }) async {
     try {
-      await FireStoreService.updateUserProfileWithImage(
+      await fireStoreService.updateUserProfileWithImage(
         username: username,
         imageFile: imageFile,
         bio: bio,
@@ -33,7 +35,7 @@ class ProfileRepoImpl extends ProfileRepo {
     required String bio,
   }) async {
     try {
-      await FireStoreService.updateUserProfile(
+      await fireStoreService.updateUserProfile(
         username: username,
         bio: bio,
       );
@@ -50,7 +52,7 @@ class ProfileRepoImpl extends ProfileRepo {
   Future<Either<FirestoreFailure, UserModel>> getUserData(
       {required String uid}) async {
     try {
-      UserModel user = await FireStoreService.getUserData(userId: uid);
+      UserModel user = await fireStoreService.getUserData(userId: uid);
       return right(user);
     } catch (e) {
       return left(FirestoreFailure(e.toString()));
@@ -61,7 +63,7 @@ class ProfileRepoImpl extends ProfileRepo {
   Future<Either<FirestoreFailure, void>> followUser(
       {required String uid, required List following}) async {
     try {
-      var rseult = await FireStoreService.followUser(
+      var rseult = await fireStoreService.followUser(
           userId: uid, following: following );
       return right(rseult);
     } on FirebaseException catch (e) {

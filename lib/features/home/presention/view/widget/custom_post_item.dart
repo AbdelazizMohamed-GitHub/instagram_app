@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_app/core/utils/funcation.dart';
 import 'package:instagram_app/core/widget/custom_picture.dart';
 
 import 'package:instagram_app/features/home/data/models/post_model.dart';
@@ -23,7 +24,7 @@ class CustomPostItem extends StatelessWidget {
     return 
        
         BlocProvider<CommentCubit>(
-          create: (context) => CommentCubit(commentRepo: CommentRepoimpl())
+          create: (context) => CommentCubit(commentRepo: getIt.get<CommentRepoimpl>())
             ..getCommentLength(postId: post[index].postId.toString()),
         
      

@@ -1,18 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:uuid/uuid.dart';
+
 import 'package:instagram_app/core/service/storge_service.dart';
 import 'package:instagram_app/features/auth/data/model/user_model.dart';
 import 'package:instagram_app/features/home/data/models/comment_model.dart';
 import 'package:instagram_app/features/home/data/models/post_model.dart';
-import 'package:uuid/uuid.dart';
 
 class FireStoreService {
-  static FirebaseFirestore firestore = FirebaseFirestore.instance;
-  static FirebaseAuth auth = FirebaseAuth.instance;
+   FirebaseFirestore firestore;
+   FirebaseAuth auth ;
+  FireStoreService({
+    required this.firestore,
+    required this.auth,
+  });
 
-  static Future<void> updateUserProfileWithImage({
+   Future<void> updateUserProfileWithImage({
     required String username,
     required Uint8List imageFile,
     required String bio,
@@ -49,7 +55,7 @@ class FireStoreService {
     }
   }
 
-  static Future<void> updateUserProfile({
+   Future<void> updateUserProfile({
     required String username,
     required String bio,
   }) async {
@@ -69,7 +75,7 @@ class FireStoreService {
     }
   }
 
-  static Future<void> followUser({
+   Future<void> followUser({
     required List following,
     required String userId,
   }) async {
@@ -101,7 +107,7 @@ class FireStoreService {
     }
   }
 
-  static Future<UserModel> getUserData({required String userId}) async {
+   Future<UserModel> getUserData({required String userId}) async {
     DocumentSnapshot doc =
         await firestore.collection('users').doc(userId).get();
 
@@ -110,7 +116,7 @@ class FireStoreService {
     return user;
   }
 
-  static Future<void> addPost(
+   Future<void> addPost(
       {required String caption, required Uint8List imageFile}) async {
     DocumentSnapshot doc =
         await firestore.collection('users').doc(auth.currentUser!.uid).get();
@@ -130,7 +136,7 @@ class FireStoreService {
     firestore.collection('posts').doc(postId).set(post.toMap());
   }
 
-  static Future<void> likePosts(
+   Future<void> likePosts(
       {required String postId,
       required String uId,
       required List likes}) async {
@@ -145,13 +151,13 @@ class FireStoreService {
     }
   }
 
-  static Future<void> deletePost(
+   Future<void> deletePost(
       {required String postId, required String imagUrl}) async {
     await firestore.collection('posts').doc(postId).delete();
     await StorgeService.deleteImage(imagUrl);
   }
 
-  static Future<void> addComment({
+   Future<void> addComment({
     required String postId,
     required String comment,
   }) async {
@@ -175,7 +181,7 @@ class FireStoreService {
         .set(comments.toMap());
   }
 
-  static Future<void> deleteComments(
+   Future<void> deleteComments(
       {required String postId, required String cId}) async {
     await firestore
         .collection('posts')
